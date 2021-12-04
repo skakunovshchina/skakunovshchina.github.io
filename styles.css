@@ -2268,3 +2268,29 @@ article {
 .house-item {
   margin: 0 15px;
 }
+
+.main-data-block {
+  margin: 30px 0;
+}
+
+#photo-navigation-menu {
+  list-style-type: none;
+  display: flex;
+  overflow: auto;
+  margin: 15px 0;
+  padding: 0;
+}
+
+#photo-full-view {
+  display: flex;
+  justify-content: center;
+}
+.full-image {
+  max-height: 600px;
+}
+
+.frame-1878 {
+  width: 100%;
+  height: calc(100vh - 100px);
+  border: 0;
+}

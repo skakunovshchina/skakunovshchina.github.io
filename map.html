@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Карта Скакуновщины</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="page" class="hfeed site">
+    <header id="masthead" class="site-header">
+        <div class="site-branding">
+            <h1 class="site-title"><a href="/">Скакуновщина</a></h1>
+        </div>
+        <!-- Navigation -->
+        <nav class="main-navigation" id="site-navigation">
+            <div class="container">
+                <button id="menu-toggle-button" class="menu-toggle">
+                    <img class="menu-icon" src="./img/hamburger-menu.svg"/>
+                    <img class="cross-icon" src="./img/cross-icon.svg"/>
+                    <span class="menu-text">Меню</span>
+                </button>
+                <div class="menu-menyu-1-container">
+                    <ul id="menu-menyu-1" class="menu nav-menu">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">Главная</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link check-link" href="/map">Карта</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link check-link" href="/zhigalo">Семен Жигало</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link check-link" href="/1925">1925</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link check-link" href="/1878">1878</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link check-link" href="/books">Книги</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+</div>
+<div id="content" class="site-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+
+                <main class="main-data-block" width="100%">
+                    <div id="photo-full-view"></div>
+                    <ul id="photo-navigation-menu"></ul>
+                    <div id="map"></div>
+                    <div>
+                        <div>
+                            <ul id="list-of-house"></ul>
+                        </div>
+                    </div>
+                </main>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="https://api-maps.yandex.ru/2.1/?apikey=79c7589a-24cc-4fcf-ba19-a727f8b85a81&lang=ru_RU"
+        type="text/javascript"></script>
+<script>
+    const linkColor = `style='color: #0066cc;'`;
+    const hatyArr = [
+        [
+            [ 55.065942, 29.112350 ],
+            'дер. Скакуновщина',
+            `деревня Скакуновщина, Низголовское сельское общество`,
+            13
+        ],
+        [
+            [ 55.099540, 29.120017 ],
+            'дер. Сокорово',
+            `деревня Сокорово, Сокоровское сельское общество`,
+            13
+        ],
+        [
+            [ 55.082656, 29.078548 ],
+            'Глебовщина',
+            `деревня Глебовщина, Сокоровское сельское общество.`,
+            13
+        ],
+        [
+            [ 55.085995, 29.101835 ],
+            'Козловщина',
+            `деревня Козловщина, Сокоровское сельское общество`,
+            13
+        ],
+        [
+            [ 55.096826, 29.096245 ],
+            'дер.Заезвино',
+            `деревня Заезвино, Сокоровское сельское общество.`,
+            13
+        ],
+        [
+            [ 55.090822, 29.070453 ],
+            'фоль.Заезвино',
+            `Фольварок Заезвино, Гайковское сельское общество`,
+            13
+        ],
+        [
+            [ 55.076748, 29.135333 ],
+            'дер.Низголово',
+            `деревня Низголово, Низголовское сельское общество.`,
+            13
+        ],
+        [
+            [ 55.055323, 29.089636 ],
+            'дер.Грабежево',
+            `деревня Грабежево (Гребешова), Низголовское сельское общество.`,
+            13
+        ],
+        [
+            [ 55.077712, 29.171426 ],
+            'дер.Заручевье',
+            `деревня Заручевье, Низголовское сельское общество.`,
+            13
+        ],
+        [
+            [ 55.096625, 29.154781 ],
+            'заст.Лазовица',
+            `застенок Лазовица.`,
+            13
+        ],
+        [
+            [ 55.0853934, 29.1284864 ],
+            'хут.Воловица',
+            `Хутор Воловица.<br>
+По переписи 1925-го, тут жил некий Каркоза Исак Никифорович с семьей.
+`,
+            13
+        ],
+        [
+            [ 55.060450, 29.045262 ],
+            'дер.Падалица',
+            `деревня Падалица, Антопольское и Сокоровское сельское общество.`,
+            13
+        ],
+        [
+            [ 55.058479, 29.070324 ],
+            'дер.Городец',
+            `деревня Городец, Антопольское сельское общество. Сейчас - урочище.`,
+            13
+        ],
+        [
+            [ 55.073418, 29.043867 ],
+            'дер.Батуколово',
+            `деревня Батуколово, Сушанское сельское общество.`,
+            13
+        ],
+        [
+            [ 55.084461, 29.043846 ],
+            'дер.Гайновщина',
+            `деревня Гайновщина, Сушанское сельское общество.`,
+            13
+        ],
+        [
+            [ 55.078345, 29.025541 ],
+            'дер.Горовыя',
+            `деревня Горовыя, Сушанское сельское общество.`,
+            13
+        ],
+        [
+            [ 55.043155, 29.031689 ],
+            'дер.Залесье',
+            `деревня Залесье, Воропаевское сельское общество.`,
+            13
+        ],
+        [
+            [ 55.042846, 29.087009 ],
+            'дер.Ладеино',
+            `деревня Ладеино (Ладеено), Воропаевское сельское общество.`,
+            13
+        ],
+        [
+            [ 55.044589, 29.147420 ],
+            'дер. Железки (Залески)',
+            `деревня Железки (Залески), Низголовское сельское общество.`,
+            13
+        ],
+    ];
+
+    const photos = [
+        [
+            [ 55.070130, 29.123041 ],
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Fpreview%2F2021-07-31%2012-06-26.jpg?alt=media&token=d1ab0912-60fa-424e-8fec-fbf470482898`,
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Forigin%2F2021-07-31%2012-06-26.jpg?alt=media&token=269cf493-8ac5-4c89-be93-22a9953481b2`,
+            `Дорога на Козловщину`
+        ],
+        [
+            [ 55.070177, 29.123179 ],
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Fpreview%2F2021-07-31%2012-06-10.jpg?alt=media&token=8c3285e3-c44f-426a-8fe1-b050e24df4ba`,
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Forigin%2F2021-07-31%2012-06-10.jpg?alt=media&token=d1220a2f-6e47-4c84-bab8-476a2f9901e2`,
+            `Вид на яблоневый сад`
+
+        ],
+        [
+            [ 55.069349, 29.124398 ],
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Fpreview%2F2021-07-31%2012-10-33.jpg?alt=media&token=580399fa-43ea-41c3-9dad-a57675679bae`,
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Forigin%2F2021-07-31%2012-10-33.jpg?alt=media&token=acbdcbb3-b3b0-4b3a-a804-2be33fad311e`,
+            `Вид на кладбище`
+
+        ],
+        [
+            [ 55.069462, 29.124304 ],
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Fpreview%2F2021-07-31%2012-10-54.jpg?alt=media&token=d493bbef-e2c3-472b-8b1b-22488f4a47d3`,
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Forigin%2F2021-07-31%2012-10-54.jpg?alt=media&token=6b2762a7-77e3-4751-b6e2-455be49f6a51`,
+            `Дорога на Низголово`
+
+        ],
+        [
+            [ 55.069383, 29.124248 ],
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Fpreview%2F2021-07-31%2012-11-29.jpg?alt=media&token=cf7fe5bf-9540-44bd-92dd-9cc2087438b8`,
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Forigin%2F2021-07-31%2012-11-29.jpg?alt=media&token=6a847a2d-3bf5-482d-aeb0-ccdffc81c2fb`,
+            `Вид на остановку`
+        ],
+        [
+            [ 55.069431, 29.124151 ],
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Fpreview%2F2021-07-31%2012-13-07.jpg?alt=media&token=807bda11-ccb7-4caa-83c1-97efbeacf1d5`,
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Forigin%2F2021-07-31%2012-13-07.jpg?alt=media&token=f2424895-0b40-4bcf-a72b-9be4aea80691`,
+            `Дорога к Скакуновщине.`
+        ],
+        [
+            [ 55.067419, 29.117577 ],
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Fpreview%2F2021-07-31%2012-17-18.jpg?alt=media&token=34789867-52fe-4c3d-85a2-ee06751b4375`,
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Forigin%2F2021-07-31%2012-17-18.jpg?alt=media&token=647a9dc8-5d7c-4f24-91f8-7d90518a8f0d`,
+            `Въезд в Скакуновщину.`
+        ],
+        [
+            [ 55.064829, 29.109147 ],
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Fpreview%2F2021-07-31%2012-26-03.jpg?alt=media&token=3d5fad44-2602-4392-850e-9724da656f42`,
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Forigin%2F2021-07-31%2012-26-03.jpg?alt=media&token=a4433bca-c984-487a-9691-a692dab79c6a`,
+            `По Скакуновщине`
+        ],
+        [
+            [ 55.065251, 29.110665 ],
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Fpreview%2F2021-07-31%2012-29-50.jpg?alt=media&token=9b10fbb3-9179-408d-a379-51deff68972c`,
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Forigin%2F2021-07-31%2012-29-50.jpg?alt=media&token=e6328cda-b398-4a0f-be8e-479eab35be8a`,
+            `По Скакуновщине`
+        ],
+        [
+            [ 55.065272, 29.110756 ],
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Fpreview%2F2021-07-31%2012-29-58.jpg?alt=media&token=41e93e6f-b9a5-40d7-b457-5cf9e45e2894`,
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Forigin%2F2021-07-31%2012-29-58.jpg?alt=media&token=e6c00895-0dfa-431c-a86d-b917decadae6`,
+            `По Скакуновщине`
+        ],
+        [
+            [ 55.065397, 29.111134 ],
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Fpreview%2F2021-07-31%2012-30-53.jpg?alt=media&token=f453e7b5-d325-4a72-a750-3142e4d3ecad`,
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Forigin%2F2021-07-31%2012-30-53.jpg?alt=media&token=869ff596-74ed-4e89-8528-4aa3f4c8a517`,
+            `По Скакуновщине`
+        ],
+        [
+            [ 55.065917, 29.112849 ],
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Fpreview%2F2021-07-31%2012-32-06.jpg?alt=media&token=02eb80de-fc70-4b40-85e2-a13bb864036d`,
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Forigin%2F2021-07-31%2012-32-06.jpg?alt=media&token=2bfa6029-3c38-4345-8824-d2a109f757ee`,
+            `По Скакуновщине`
+        ],
+        [
+            [ 55.066035, 29.113711 ],
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Fpreview%2F2021-07-31%2012-33-00.jpg?alt=media&token=c59d8bf5-6741-4f03-827f-d58198511260`,
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Forigin%2F2021-07-31%2012-33-00.jpg?alt=media&token=bddea8e6-8e7d-4b04-b44c-6b4f6e1d99e6`,
+            `Хаты...`
+        ],
+        [
+            [ 55.065389, 29.114176 ],
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Fpreview%2F2021-07-31%2012-34-12.jpg?alt=media&token=d4428382-6ef2-443d-b35b-619224a2bcfd`,
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Forigin%2F2021-07-31%2012-34-12.jpg?alt=media&token=b9d1c150-6f74-4b04-ab88-ade444a16023`,
+            `Пасека`
+        ],
+        [
+            [ 55.064977, 29.114860 ],
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Fpreview%2F2021-07-31%2012-35-21.jpg?alt=media&token=80d64f75-b0b0-4588-ad96-b6a102ee9156`,
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Forigin%2F2021-07-31%2012-35-21.jpg?alt=media&token=f28774e8-425f-47e3-b7db-80d5e50813a0`,
+            `Вид на озеро`
+        ],
+        [
+            [ 55.066190, 29.113754 ],
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Fpreview%2F2021-07-31%2012-40-44.jpg?alt=media&token=697f5374-ba29-484c-9523-728844fd98df`,
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Forigin%2F2021-07-31%2012-40-44.jpg?alt=media&token=dbbcfc94-15de-4194-b311-13c9922974c7`,
+            `По Скакуновщине`
+        ],
+        [
+            [ 55.072753, 29.126037 ],
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Fpreview%2Fphoto_2021-07-31_20-44-22.jpg?alt=media&token=863d5ee3-df5d-44ed-81d9-7ea8273d99cf`,
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Forigin%2Fphoto_2021-07-31_20-44-22.jpg?alt=media&token=bcc2b239-f881-444e-aa81-b6dcd41fe54e`,
+            `д. Низголово`
+        ],
+        [
+            [ 55.056609, 29.143068 ],
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Fpreview%2Fphoto_2021-07-31_20-44-28.jpg?alt=media&token=a41b3223-d8a3-4f32-b89b-ec681b0794fa`,
+            `https://firebasestorage.googleapis.com/v0/b/shappo-d93a6.appspot.com/o/skakunovshchina%2Forigin%2Fphoto_2021-07-31_20-44-28.jpg?alt=media&token=8a1fe257-6bba-4e5a-8636-23dd4d887789`,
+            `д. Двор-Низголово`
+        ],
+
+    ];
+// `<a href="#${index + hatyArr.length}"><img width="100" height="75" src="${preview}"></a>`,
+    const photosToCircle = photos.map(([coords, preview, orig = '#', title], index) => ([
+        coords,
+        title || 'фото',
+        `<a href="${orig}" target="_blank"><img width="100" height="75" src="${preview}"></a>`,
+            null,
+            1
+        ]
+    ));
+
+    const photoNavigationMenu = photos.map(([, preview,, title], index) =>
+        `<li>
+            <a href="#${index + hatyArr.length}">
+                <img src="${preview}" title="${title}">
+            </a>
+        </li>`
+    );
+    document.getElementById('photo-navigation-menu').innerHTML = photoNavigationMenu.join('');
+
+    const objektsArr = [...hatyArr, ...photosToCircle];
+
+    const circleRadius = (zoom) => {
+        let radius = 0;
+        switch (zoom) {
+            case 19:
+                radius = 1;
+                break;
+            case 18:
+                radius = 2;
+                break;
+            case 17:
+                radius = 3;
+                break;
+            case 16:
+                radius = 7;
+                break;
+            case 15:
+                radius = 12;
+                break;
+            case 14:
+                radius = 20;
+                break;
+            case 13:
+                radius = 40;
+                break;
+            case 12:
+                radius = 70;
+                break;
+            case 11:
+                radius = 90;
+                break;
+            case 10:
+                radius = 100;
+                break;
+            default:
+                radius = 3;
+
+        }
+        return radius;
+    };
+
+
+    const listOfHouse = document.getElementById('list-of-house');
+    objektsArr.forEach(([ , title ], index) => {
+        const li = document.createElement('li');
+        li.classList.add('house-item');
+        li.innerHTML = `<a class="continue-reading" href="#${index}">${title}</a>`;
+        listOfHouse.appendChild(li);
+    });
+
+
+    const fillColor = '#ff000c';// Цвет заливки.
+    const strokeColor = '#fff';// Цвет обводки.
+    const opacity = 0.2;// Общая прозрачность (как для заливки, так и для обводки).
+    const strokeWidth = 1;// Ширина линии.
+    const strokeStyle = 'shortdash';// Стиль обводки.
+
+    const options = {
+        fillColor,
+        strokeColor,
+        opacity,
+        strokeWidth,
+        strokeStyle
+    };
+    const optionsHata = {
+        fillColor,
+        strokeColor,
+        strokeWidth
+    };
+    ymaps.ready(init);
+
+    function init() {
+        let obj = 0;
+        if (typeof window !== "undefined" && window.location) {
+            const { href, hash } = window.location;
+            obj = hash.slice(1) || 0;
+        }
+
+        const myMap = new ymaps.Map("map", {
+            zoom: objektsArr[ obj ][ 3 ] || 16,
+            center: objektsArr[ obj ][ 0 ],
+            type: 'yandex#hybrid'
+        });
+
+        myMap.events.add('boundschange', function (event) {
+            const newZoom = event.get('newZoom');
+            const radius = circleRadius(newZoom);
+            readyArr.forEach((circle, index) => index < hatyArr.length ? circle.geometry.setRadius(radius) : null);
+        });
+
+        const createHomeDot = (coord, title, discription, zoom, rad) => new ymaps.Circle([
+            coord,
+            zoom ? circleRadius(zoom) : rad || 3
+        ], {
+            balloonContent: discription,
+            open: true,
+            hintContent: title
+        }, optionsHata);
+
+
+        const readyArr = objektsArr.map((hata) => createHomeDot(...hata));
+        readyArr.forEach((hata, index) => {
+            hata.events.add('click', function () {
+                if (typeof window !== "undefined" && window.location) {
+                    // window.location.hash = `#${index}`;
+                }
+            });
+            myMap.geoObjects.add(hata);
+        });
+
+        readyArr[ obj ].balloon.open();
+
+        window.addEventListener('popstate', () => {
+            if (typeof window !== "undefined" && window.location) {
+                const { hash } = window.location;
+                obj = hash.slice(1) || 0;
+
+/*
+                if (hatyArr.length < obj) {
+                    document.getElementById('photo-full-view').innerHTML = `
+                        <img class="full-image" src="${photos[obj - hatyArr.length][2]}">
+                    `;
+                } else {
+                    document.getElementById('photo-full-view').innerHTML = ``;
+                }
+*/
+            }
+            const curr = objektsArr[ obj ];
+            myMap.setCenter(objektsArr[ obj ][ 0 ], curr[ 3 ] || 18);
+            readyArr[ obj ].balloon.open();
+        });
+
+    }
+
+</script>
+</body>
+</html>

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Скакуновщина</title>
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -10,291 +11,74 @@
     <header id="masthead" class="site-header">
         <div class="site-branding">
             <h1 class="site-title"><a href="/">Скакуновщина</a></h1>
-            <!--<div class="site-description check-item">description</div>-->
         </div>
+        <!-- Navigation -->
+        <nav class="main-navigation" id="site-navigation">
+            <div class="container">
+                <button id="menu-toggle-button" class="menu-toggle">
+                    <img class="menu-icon" src="./img/hamburger-menu.svg"/>
+                    <img class="cross-icon" src="./img/cross-icon.svg"/>
+                    <span class="menu-text">Меню</span>
+                </button>
+                <div class="menu-menyu-1-container">
+                    <ul id="menu-menyu-1" class="menu nav-menu">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">Главная</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link check-link" href="/map">Карта</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link check-link" href="/zhigalo">Семен Жигало</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link check-link" href="/1925">1925</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link check-link" href="/1878">1878</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link check-link" href="/books">Книги</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </header>
 </div>
 
-<main class="main-data-block" width="100%">
 
-    <div>
-        <div>
-            <ul id="list-of-house"></ul>
+<div id="content" class="site-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+
+                <main class="main-data-block" width="100%">
+                    <div>
+                        <p>
+                            Карта окрестностей Скакуновщины с фото и отмеками исчезнувших деревень.
+                            <br>
+                            <a class="continue-reading check-link" href="/map">Карта &rarr;</a>
+                        </p>
+                        <p>
+                            Дневник Семена Жигало, жителя Скакуновщины. Где описывается жизнь в деревне и стране до революции, после революции, коллективизация, оккупация...<br>
+                            <a class="continue-reading check-link" href="/zhigalo">Дневник &rarr;</a>
+                        </p>
+                        <p>
+                            Из метрических книг, по Низголовской церкви (к которой относилась Скакуновщина), сохранилась только одна книга - за 1878 год.
+                            <br>
+                            <a class="continue-reading check-link" href="/1878">МК Низголовской церкви 1878 &rarr;</a>
+                        </p>
+                    </div>
+
+
+                </main>
+
+            </div>
         </div>
     </div>
-    <div id="map"></div>
-</main>
 
-<script src="https://api-maps.yandex.ru/2.1/?apikey=79c7589a-24cc-4fcf-ba19-a727f8b85a81&lang=ru_RU" type="text/javascript"></script>
-<script>
-    const linkColor = `style='color: #0066cc;'`;
-    const hatyArr = [
-        [
-            [ 55.065942, 29.112350 ],
-            'дер. Скакуновщина',
-            `деревня Скакуновщина, Низголовское сельское общество`,
-            13
-        ],
-        [
-            [ 55.099540, 29.120017 ],
-            'дер. Сокорово',
-            `деревня Сокорово, Сокоровское сельское общество`,
-            13
-        ],
-        [
-            [ 55.082656, 29.078548 ],
-            'Глебовщина',
-            `деревня Глебовщина, Сокоровское сельское общество.`,
-            13
-        ],
-        [
-            [ 55.085995, 29.101835 ],
-            'Козловщина',
-            `деревня Козловщина, Сокоровское сельское общество`,
-            13
-        ],
-        [
-            [ 55.096826, 29.096245 ],
-            'дер.Заезвино',
-            `деревня Заезвино, Сокоровское сельское общество.`,
-            13
-        ],
-        [
-            [ 55.090822, 29.070453 ],
-            'фоль.Заезвино',
-            `Фольварок Заезвино, Гайковское сельское общество`,
-            13
-        ],
-        [
-            [ 55.076748, 29.135333 ],
-            'дер.Низголово',
-            `деревня Низголово, Низголовское сельское общество.`,
-            13
-        ],
-        [
-            [ 55.055323, 29.089636 ],
-            'дер.Грабежево',
-            `деревня Грабежево (Гребешова), Низголовское сельское общество.`,
-            13
-        ],
-        [
-            [ 55.077712, 29.171426 ],
-            'дер.Заручевье',
-            `деревня Заручевье, Низголовское сельское общество.`,
-            13
-        ],
-        [
-            [ 55.096625, 29.154781 ],
-            'заст.Лазовица',
-            `застенок Лазовица.`,
-            13
-        ],
-        [
-            [ 55.0853934,29.1284864 ],
-            'хут.Воловица',
-            `Хутор Воловица.<br>
-По переписи 1925-го, тут жил некий Каркоза Исак Никифорович с семьей.
-`,
-            13
-        ],
-        [
-            [ 55.060450, 29.045262 ],
-            'дер.Падалица',
-            `деревня Падалица, Антопольское и Сокоровское сельское общество.`,
-            13
-        ],
-        [
-            [ 55.058479, 29.070324 ],
-            'дер.Городец',
-            `деревня Городец, Антопольское сельское общество. Сейчас - урочище.`,
-            13
-        ],
-        [
-            [ 55.073418, 29.043867 ],
-            'дер.Батуколово',
-            `деревня Батуколово, Сушанское сельское общество.`,
-            13
-        ],
-        [
-            [ 55.084461, 29.043846 ],
-            'дер.Гайновщина',
-            `деревня Гайновщина, Сушанское сельское общество.`,
-            13
-        ],
-        [
-            [ 55.078345, 29.025541 ],
-            'дер.Горовыя',
-            `деревня Горовыя, Сушанское сельское общество.`,
-            13
-        ],
-        [
-            [ 55.043155, 29.031689 ],
-            'дер.Залесье',
-            `деревня Залесье, Воропаевское сельское общество.`,
-            13
-        ],
-        [
-            [ 55.042846, 29.087009 ],
-            'дер.Ладеино',
-            `деревня Ладеино (Ладеено), Воропаевское сельское общество.`,
-            13
-        ],
-        [
-            [ 55.044589, 29.147420 ],
-            'дер. Железки (Залески)',
-            `деревня Железки (Залески), Низголовское сельское общество.`,
-            13
-        ],
-    ];
-
-    const circleRadius = (zoom) => {
-        let radius = 0;
-        switch (zoom) {
-            case 19:
-                radius = 1;
-                break;
-            case 18:
-                radius = 2;
-                break;
-            case 17:
-                radius = 3;
-                break;
-            case 16:
-                radius = 7;
-                break;
-            case 15:
-                radius = 12;
-                break;
-            case 14:
-                radius = 20;
-                break;
-            case 13:
-                radius = 40;
-                break;
-            case 12:
-                radius = 70;
-                break;
-            case 11:
-                radius = 90;
-                break;
-            case 10:
-                radius = 100;
-                break;
-            default:
-                radius = 3;
-
-        }
-        return radius;
-    };
-
-
-
-    const listOfHouse = document.getElementById('list-of-house');
-    hatyArr.forEach(([,title], index) => {
-        const li = document.createElement('li');
-        li.classList.add('house-item');
-        li.innerHTML = `<a class="continue-reading" href="#${index}">${title}</a>`;
-        listOfHouse.appendChild(li);
-    });
-
-
-    const fillColor = '#ff000c';// Цвет заливки.
-    const strokeColor = '#fff';// Цвет обводки.
-    const opacity = 0.2;// Общая прозрачность (как для заливки, так и для обводки).
-    const strokeWidth = 1;// Ширина линии.
-    const strokeStyle = 'shortdash';// Стиль обводки.
-
-    const options = {
-        fillColor,
-        strokeColor,
-        opacity,
-        strokeWidth,
-        strokeStyle
-    };
-    const optionsHata = {
-        fillColor,
-        strokeColor,
-        strokeWidth
-    };
-    ymaps.ready(init);
-
-    function init() {
-        let obj = 0;
-        if (typeof window !== "undefined" && window.location) {
-            const {href, hash} = window.location;
-            obj = hash.slice(1) || 0;
-        }
-
-        const myMap = new ymaps.Map("map", {
-            zoom: hatyArr[obj][3] || 18,
-            center: hatyArr[obj][0],
-            type: 'yandex#hybrid'
-        });
-
-        myMap.events.add('boundschange', function(event) {
-            const newZoom = event.get('newZoom');
-            const radius = circleRadius(newZoom);
-            readyArr.forEach((circle) => circle.geometry.setRadius(radius));
-        });
-
-        const kladbische = new ymaps.GeoObject({
-            geometry: {
-                type: "Polygon",
-                coordinates: [
-                    [
-                        [55.070434, 29.122930],
-                        [55.070745, 29.124437],
-                        [55.069825, 29.124238],
-                        [55.069671, 29.123900],
-                        [55.070046, 29.123348],
-                    ],
-                ],
-                fillRule: "nonZero"
-            },
-            properties:{
-                balloonContent: "Кладбище",
-                hintContent: "Кладбище"
-            }
-        }, options);
-
-        const createHomeDot = (coord, title, discription, zoom) => new ymaps.Circle([
-            coord,
-            zoom ? circleRadius(zoom) : 3
-        ], {
-            balloonContent: discription,
-            open: true,
-            hintContent: title
-        }, optionsHata);
-
-
-
-
-        const readyArr = hatyArr.map((hata) => createHomeDot(...hata));
-        readyArr.forEach((hata, index) => {
-            hata.events.add('click', function () {
-                if (typeof window !== "undefined" && window.location) {
-                    // window.location.hash = `#${index}`;
-                }
-            });
-            myMap.geoObjects.add(hata);
-        });
-        myMap.geoObjects
-            .add(kladbische)
-        ;
-        readyArr[obj].balloon.open();
-
-        window.addEventListener('popstate', () => {
-            if (typeof window !== "undefined" && window.location) {
-                const {hash} = window.location;
-                obj = hash.slice(1) || 0;
-            }
-            const curr = hatyArr[obj];
-            myMap.setCenter(hatyArr[obj][0], curr[3] || 18);
-            readyArr[obj].balloon.open();
-        });
-
-    }
-
-</script>
+</div>
+<script src="js/scripts.js"></script>
 </body>
 </html>
